@@ -1,97 +1,72 @@
-import java.util.HashMap;
-
 class LRUCache {
 
+    private HashMap<Integer, LinkNode> hashMap;
     private int capacity;
-    private HashMap<Integer, Node> cache;
 
-    private Node left;
-    private Node right; 
+    private LinkNode headLRU; 
+    private LinkNode tailMRU; 
 
-    private class Node{
+    private class LinkNode {
 
-        private int key;
-        private int value;
-        private Node prev; 
-        private Node next;
+        private LinkNode prev; 
+        private LinkNode next;
+        private int key; 
+        private int val;
 
-
-        Node(int key, int value) {
+        private LinkNode(int key, int val) {
             this.key = key;
-            this.value = value; 
+            this.val = val;
         }
+
     }
 
-    /**
-     * init LRU cache w Pos capacity
-     * Essentially behaving as constructor 
-     */
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.cache = new HashMap<Integer, Node>();
-
-        // doubly LL 
-        this.left = new Node(0,0);
-        this.right = new Node(0,0);
-
-        left.next = right;
-        right.prev = left; 
-    }
-
-    private void remove(Node node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-        
-    }
-
-    private void insert(Node node) {
-        Node prev = right.prev;
-
-        prev.next = node;
-        node.prev = prev;
-
-        node.next = right;
-        right.prev = node;
+        this.hashMap = new HashMap<>(capacity);
+        this.headLRU = new LinkNode(0,0);
+        this.tailMRU = new LinkNode(0,0);
+        headLRU.next = tailMRU;
+        tailMRU.prev = headLRU;
     }
     
-    /**
-     * Returns val of key, return -1 if no exist
-     */
     public int get(int key) {
-        if (cache.get(key) == null) {
-            return -1; // key not found or.. maps to null 
+        if (!hashMap.containsKey(key)) {
+            return -1;
         }
-        Node node = cache.get(key);
-        remove(node);
-        insert(node);
-        return node.value;
+        LinkNode dummy = hashMap.get(key);
+        remove(dummy);
+        insertMRU(dummy);
+        return dummy.val;
     }
     
-    /**
-     * update val of key --> value if it exist.
-
-     * otherwise, add | Key | Value |to cache. 
-
-     * if # of keys exceeds capacity, evict LRU key.
-     */
     public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            Node node = cache.get(key);
-            node.value = value; // update said value 
+        if (hashMap.containsKey(key)) {
+            LinkNode dummy = hashMap.get(key);
+            dummy.val = value;
+            remove(dummy);
+            insertMRU(dummy);
+            return;
+        } else
+        if (hashMap.size() == capacity) {
+            LinkNode lru = headLRU.next;
+            remove(headLRU.next); 
+            hashMap.remove(lru.key);
+        }
+        LinkNode dummy = new LinkNode(key, value);
+        insertMRU(dummy);
+        hashMap.put(key, dummy);
+    }
 
-            remove(node);
-            insert(node);
-        }
-        if (!cache.containsKey(key)) {
-            Node node = new Node(key, value);
-            cache.put(key, node);
-            insert(node);
-            if (cache.size() > capacity) {
-                Node lru = left.next;
-                cache.remove(lru.key);
-                remove(lru);
-            }
-        }
+    private void insertMRU(LinkNode dummy) {
+        tailMRU.prev.next = dummy; 
+        dummy.prev = tailMRU.prev;
+        dummy.next = tailMRU;
+        tailMRU.prev = dummy;
+    }
+
+    private void remove(LinkNode dummy) {
+        dummy.prev.next = dummy.next;
+        dummy.next.prev = dummy.prev;
     }
 }
 
