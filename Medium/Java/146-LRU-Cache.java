@@ -1,34 +1,34 @@
 class LRUCache {
 
-    private int capacity;
+    private int capacity; 
     private HashMap<Integer, LinkNode> map;
-    private LinkNode headLRU;
     private LinkNode tailMRU;
+    private LinkNode headLRU;
+
+
 
     private class LinkNode {
-        LinkNode prev; 
-        LinkNode next;
-        int key;
-        int val;
+        private int key;
+        private int val;
+        private LinkNode prev;
+        private LinkNode next;
 
-        LinkNode(int key, int val) {
-            this.key = key;
+        private LinkNode(int key, int val) {
+            this.key = key; 
             this.val = val;
         }
     }
 
-    public LRUCache(int capacity) {
-        this.capacity = capacity;
-        this.map = new HashMap<>(capacity);
-        this.headLRU = new LinkNode(0,0);
+    public LRUCache(int capacity) { 
+        this.capacity = capacity; 
+        this.map = new HashMap<>(capacity); 
         this.tailMRU = new LinkNode(0,0);
-        headLRU.next = tailMRU;
+        this.headLRU = new LinkNode(0,0); 
         tailMRU.prev = headLRU;
+        headLRU.next = tailMRU;
     }
     
-
-
-    public int get(int key) {
+    public int get(int key) { 
         if (!map.containsKey(key)) {
             return -1;
         }
@@ -37,28 +37,27 @@ class LRUCache {
         return dummy.val;
     }
     
+    public void put(int key, int value) {
 
-    public void put(int key, int value) { 
         if (map.containsKey(key)) {
             LinkNode dummy = map.get(key);
             dummy.val = value;
             updateCache(dummy);
             return;
         } else
-        if (map.size() == capacity) {
-            LinkNode lru = headLRU.next; 
+        if (map.size() == capacity) { 
+            LinkNode lru = headLRU.next;
             remove(lru);
             map.remove(lru.key);
         }
         LinkNode dummy = new LinkNode(key, value);
-        insertMRU(dummy);
         map.put(key, dummy);
+        insertMRU(dummy);
     }
 
     private void remove(LinkNode dummy) {
         dummy.prev.next = dummy.next;
-        dummy.next.prev = dummy.prev;
-
+        dummy.next.prev = dummy.prev; 
     }
 
     private void insertMRU(LinkNode dummy) {
