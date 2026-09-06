@@ -1,8 +1,7 @@
 class RandomizedSet {
 
-
-    HashMap<Integer, Integer> map; // key our #, val -> idx in array list so we can do a O(1) removal 
-    ArrayList<Integer> list;
+    HashMap<Integer, Integer> map;
+    ArrayList<Integer> list; 
 
     public RandomizedSet() {
         this.map = new HashMap<>();
@@ -23,17 +22,17 @@ class RandomizedSet {
         if (!map.containsKey(val)) {
             return false;
         }
-        int removeIdx = map.get(val);
-        int lastValue = list.get(list.size() - 1); 
-        list.set(removeIdx, lastValue);
-        map.put(lastValue, removeIdx);
+        int removeIdx = map.get(val); 
+        int listLastValue = list.get(list.size() - 1); 
+        list.set(removeIdx, listLastValue);
+        map.put(listLastValue, removeIdx);
         list.remove(list.size() - 1);
         map.remove(val);
         return true;
     }
     
     public int getRandom() {
-        Random random = new Random();
+        Random random = new Random(); 
         int randomInt = random.nextInt(list.size());
         return list.get(randomInt);
     }
