@@ -1,11 +1,12 @@
 class HitCounter {
 
-    private Queue<Integer> q;
-    private int maxAge;
+    Queue<Integer> q;
+    private int maxAge; 
 
     public HitCounter() {
+        this.maxAge = 300; 
         this.q = new LinkedList<>();
-        this.maxAge = 300;
+        
     }
     
     public void hit(int timestamp) {
@@ -13,9 +14,8 @@ class HitCounter {
     }
     
     public int getHits(int timestamp) {
-        
         while (!q.isEmpty() && timestamp - q.peek() >= maxAge) {
-            q.poll(); 
+            q.poll();
         }
         return q.size();
     }
@@ -25,5 +25,5 @@ class HitCounter {
  * Your HitCounter object will be instantiated and called as such:
  * HitCounter obj = new HitCounter();
  * obj.hit(timestamp);
- * int param_2 = obj.getq(timestamp);
+ * int param_2 = obj.getHits(timestamp);
  */
