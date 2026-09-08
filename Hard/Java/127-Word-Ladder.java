@@ -4,7 +4,6 @@ class Solution {
             return 0;
         }
         HashMap<String, List<String>> map = new HashMap<>();
-        // build adjacency list
         for (String word: wordList) {
             for (int i = 0; i < word.length(); i++) {
                 char[] charWord = word.toCharArray(); // ['h','e','l','l','o']
@@ -18,6 +17,7 @@ class Solution {
         }
         return bfs(beginWord, endWord, map);
     }
+
 
     private int bfs(String beginWord, String endWord, HashMap<String, List<String>> map) {
         Queue<String> q = new LinkedList<>();
