@@ -8,6 +8,7 @@ class Solution {
         while (maxHeap.size() > 1) {
             int first = maxHeap.poll();
             int second = maxHeap.poll();
+
             if (first > second) {
                 maxHeap.add(first - second);
             } else {
@@ -15,6 +16,5 @@ class Solution {
             }
         }
         return maxHeap.poll();
-        
     }
 }
