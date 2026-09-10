@@ -1,56 +1,56 @@
 class SnapshotArray {
 
-    private ArrayList<Pair>[] history; 
-    private int snap_ID;
+    private ArrayList<Pair>[] history;
+    private int snapID;
     private int length;
 
     private class Pair {
-        private int snapID;
+        private int pastSnapID; 
         private int val;
-
-        Pair(int snapID, int val) {
-            this.snapID = snapID;
+        Pair(int pastSnapID, int val) {
+            this.pastSnapID = pastSnapID;
             this.val = val;
         }
     }
 
     public SnapshotArray(int length) {
         this.history = new ArrayList[length];
-        this.snap_ID = 0;
+        this.snapID = 0;
+        this.length = length;
 
-        for (int i = 0; i < length; i++) {
+        for(int i = 0; i < length; i++) {
             history[i] = new ArrayList<>();
         }
     }
     
     public void set(int index, int val) {
-        history[index].add(new Pair(snap_ID, val));
+        history[index].add(new Pair(snapID, val));
     }
     
     public int snap() {
-        return snap_ID++; 
-    
+        return snapID++;
+        
     }
     
     public int get(int index, int snap_id) {
-        ArrayList<Pair> list = history[index]; 
+        ArrayList<Pair> list = history[index];
+        // binary search now 
         int left = 0;
-        int right = list.size() - 1;
+        int right = list.size() - 1; 
         int answer = 0;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
             Pair curr = list.get(mid);
-            if (curr.snapID <= snap_id) {
+            if (curr.pastSnapID <= snap_id) {
                 answer = curr.val;
                 left = mid + 1;
-            } else
-            if (curr.snapID >= snap_id) {
+            } else 
+            if (curr.pastSnapID >= snap_id) {
                 right = mid - 1;
             }
         }
         return answer;
-
     }
 }
 
