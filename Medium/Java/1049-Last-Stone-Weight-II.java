@@ -1,7 +1,7 @@
 class Solution {
     public int lastStoneWeightII(int[] stones) {
         int sum = Arrays.stream(stones).sum();
-        int target = sum / 2;
+        int target = sum / 2; 
         int[] dp = new int[target + 1];
 
         for(int stone: stones) {
