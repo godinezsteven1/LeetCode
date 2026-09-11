@@ -1,17 +1,15 @@
 class LRUCache {
-
-    private int capacity;
-    private HashMap<Integer, LinkNode> map;
-    private int key; 
-    private int val;
-    private LinkNode headLRU; 
-    private LinkNode tailMRU;
+    int capacity;
+    int key;
+    LinkNode headLRU;
+    LinkNode tailMRU;
+    HashMap<Integer, LinkNode> map;
 
     private class LinkNode {
-        private int key;
-        private int val; 
-        private LinkNode prev;
-        private LinkNode next;
+        int key;
+        int val;
+        LinkNode prev;
+        LinkNode next;
 
         LinkNode(int key, int val) {
             this.key = key;
@@ -19,54 +17,57 @@ class LRUCache {
         }
     }
 
+
+
     public LRUCache(int capacity) {
-        this.map = new HashMap<>(capacity);
         this.capacity = capacity;
-        this.key = key; 
-        this.val = val;
+        this.key = key;
         this.headLRU = new LinkNode(0,0);
         this.tailMRU = new LinkNode(0,0);
         headLRU.next = tailMRU;
         tailMRU.prev = headLRU;
+        this.map = new HashMap<>(capacity);
+        
     }
     
     public int get(int key) {
         if (!map.containsKey(key)) {
             return -1;
         }
-        LinkNode dummy = map.get(key); 
-        updateCache(dummy);  
-        return dummy.val;
-        
+        LinkNode dummy = map.get(key);
+        updateCache(dummy);
+        return dummy.val; 
     }
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            LinkNode dummy = map.get(key); 
+            LinkNode dummy = map.get(key);
             dummy.val = value;
             updateCache(dummy);
             return;
         }
         if (map.size() == capacity) {
-            LinkNode lru = headLRU.next; // [head:fake] <-> [real] <-> [][][][[]]
-            remove(lru);
+            LinkNode lru = headLRU.next;
             map.remove(lru.key);
+            remove(lru);
         }
         LinkNode dummy = new LinkNode(key, value);
+        map.put(key, dummy);
         insertMRU(dummy);
-        map.put(key, dummy); 
+        
     }
 
     private void remove(LinkNode dummy) {
-        dummy.prev.next = dummy.next; 
+        dummy.prev.next = dummy.next;
         dummy.next.prev = dummy.prev;
+
     }
 
     private void insertMRU(LinkNode dummy) {
         tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
-        dummy.next = tailMRU;
         tailMRU.prev = dummy;
+        dummy.next = tailMRU;
     }
 
     private void updateCache(LinkNode dummy) {
