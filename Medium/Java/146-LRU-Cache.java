@@ -1,33 +1,33 @@
 class LRUCache {
-    int capacity;
-    int key;
-    LinkNode headLRU;
-    LinkNode tailMRU;
-    HashMap<Integer, LinkNode> map;
+
+    private int key;
+    private int val;
+    private LinkNode headLRU;
+    private LinkNode tailMRU;
+    private HashMap<Integer, LinkNode> map;
+    private int capacity; 
 
     private class LinkNode {
-        int key;
-        int val;
-        LinkNode prev;
-        LinkNode next;
+        private int key;
+        private int val;
+        private LinkNode prev;
+        private LinkNode next;
 
-        LinkNode(int key, int val) {
+        private LinkNode(int key, int val) {
             this.key = key;
             this.val = val;
         }
     }
 
-
-
     public LRUCache(int capacity) {
         this.capacity = capacity;
         this.key = key;
+        this.val = val;
         this.headLRU = new LinkNode(0,0);
         this.tailMRU = new LinkNode(0,0);
         headLRU.next = tailMRU;
         tailMRU.prev = headLRU;
         this.map = new HashMap<>(capacity);
-        
     }
     
     public int get(int key) {
@@ -36,7 +36,7 @@ class LRUCache {
         }
         LinkNode dummy = map.get(key);
         updateCache(dummy);
-        return dummy.val; 
+        return dummy.val;
     }
     
     public void put(int key, int value) {
@@ -45,29 +45,27 @@ class LRUCache {
             dummy.val = value;
             updateCache(dummy);
             return;
-        }
+        } 
         if (map.size() == capacity) {
-            LinkNode lru = headLRU.next;
+            LinkNode lru = headLRU.next; 
             map.remove(lru.key);
             remove(lru);
         }
         LinkNode dummy = new LinkNode(key, value);
         map.put(key, dummy);
         insertMRU(dummy);
-        
     }
 
     private void remove(LinkNode dummy) {
         dummy.prev.next = dummy.next;
         dummy.next.prev = dummy.prev;
-
     }
 
     private void insertMRU(LinkNode dummy) {
         tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
-        tailMRU.prev = dummy;
         dummy.next = tailMRU;
+        tailMRU.prev = dummy;
     }
 
     private void updateCache(LinkNode dummy) {
