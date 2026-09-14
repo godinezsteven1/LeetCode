@@ -1,19 +1,26 @@
 class LRUCache {
+    /**
+    constraints 
+    naive: hash map (val , counter )
 
-    private int key;
-    private int val;
-    private LinkNode headLRU;
-    private LinkNode tailMRU;
-    private HashMap<Integer, LinkNode> map;
-    private int capacity; 
+    optimal: 
+    hash map <integer, DLL> headLRU - [headLRU.next] - [dummy] - [tailMRU.prev]- tailMRU 
+    updateCache (node)
+    */
+
+    int key;
+    int val;
+    LinkNode headLRU;
+    LinkNode tailMRU;
+    int capacity;
+    HashMap<Integer, LinkNode> map;
 
     private class LinkNode {
-        private int key;
-        private int val;
-        private LinkNode prev;
-        private LinkNode next;
-
-        private LinkNode(int key, int val) {
+        int key;
+        int val;
+        LinkNode next;
+        LinkNode prev;
+        LinkNode(int key, int val) {
             this.key = key;
             this.val = val;
         }
@@ -42,14 +49,14 @@ class LRUCache {
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             LinkNode dummy = map.get(key);
-            dummy.val = value;
+            dummy.val = value; 
             updateCache(dummy);
             return;
-        } 
+        }
         if (map.size() == capacity) {
-            LinkNode lru = headLRU.next; 
-            map.remove(lru.key);
+            LinkNode lru = headLRU.next;
             remove(lru);
+            map.remove(lru.key);
         }
         LinkNode dummy = new LinkNode(key, value);
         map.put(key, dummy);
@@ -57,15 +64,21 @@ class LRUCache {
     }
 
     private void remove(LinkNode dummy) {
+        // [] <-> [dummy] <-> []
         dummy.prev.next = dummy.next;
         dummy.next.prev = dummy.prev;
     }
 
     private void insertMRU(LinkNode dummy) {
+        // <-> [real tail] <-> [tailMRU]
+        //            ^  >[dummy]< ^
         tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
         dummy.next = tailMRU;
         tailMRU.prev = dummy;
+
+
+
     }
 
     private void updateCache(LinkNode dummy) {
