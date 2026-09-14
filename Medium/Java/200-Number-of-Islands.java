@@ -3,16 +3,18 @@ class Solution {
     private class Pair {
         int x;
         int y;
-        Pair(int x, int y) {
+        Pair(int x, int y) { 
             this.x = x;
             this.y = y;
         }
     }
 
+    // O(row x col)
     public int numIslands(char[][] grid) {
         int islandCounter = 0;
-        for(int row = 0; row < grid.length; row++) {
-            for(int col = 0; col < grid[0].length; col++) {
+
+        for(int row = 0; row <= grid.length - 1; row++) {
+            for(int col = 0; col <= grid[0].length - 1; col++) {
                 if (grid[row][col] == '1') {
                     islandCounter++;
                     bfs(row, col, grid);
@@ -34,14 +36,6 @@ class Solution {
     }
 
     private void checkNeighbors(int x, int y, Queue<Pair> q, char[][] grid) {
-        if (y - 1 >= 0 && grid[x][y - 1] == '1') {
-            grid[x][y - 1] = '0';
-            q.add(new Pair(x, y - 1));
-        }
-        if (y + 1 <= grid[0].length - 1 && grid[x][y + 1] == '1') {
-            grid[x][y + 1] = '0';
-            q.add(new Pair(x, y + 1));
-        }
         if (x - 1 >= 0 && grid[x - 1][y] == '1') {
             grid[x - 1][y] = '0';
             q.add(new Pair(x - 1, y));
@@ -50,5 +44,19 @@ class Solution {
             grid[x + 1][y] = '0';
             q.add(new Pair(x + 1, y));
         }
+        if (y - 1 >= 0 && grid[x][y - 1] == '1') {
+            grid[x][y - 1] = '0';
+            q.add(new Pair(x, y - 1));
+        }
+        if (y + 1 <= grid[0].length - 1 && grid[x][y + 1] == '1') {
+            grid[x][y + 1] = '0';
+            q.add(new Pair(x, y + 1));
+        }
     }
+
+
+
+
+
+
 }
