@@ -1,40 +1,31 @@
 class LRUCache {
-    /**
-    constraints 
-    naive: hash map (val , counter )
 
-    optimal: 
-    hash map <integer, DLL> headLRU - [headLRU.next] - [dummy] - [tailMRU.prev]- tailMRU 
-    updateCache (node)
-    */
-
+    int capacity;
     int key;
-    int val;
+    HashMap<Integer, LinkNode> map; 
     LinkNode headLRU;
     LinkNode tailMRU;
-    int capacity;
-    HashMap<Integer, LinkNode> map;
 
     private class LinkNode {
         int key;
         int val;
-        LinkNode next;
         LinkNode prev;
+        LinkNode next;
         LinkNode(int key, int val) {
             this.key = key;
             this.val = val;
+
         }
     }
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
         this.key = key;
-        this.val = val;
+        this.map = new HashMap<>(capacity);
         this.headLRU = new LinkNode(0,0);
         this.tailMRU = new LinkNode(0,0);
         headLRU.next = tailMRU;
         tailMRU.prev = headLRU;
-        this.map = new HashMap<>(capacity);
     }
     
     public int get(int key) {
@@ -49,7 +40,7 @@ class LRUCache {
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             LinkNode dummy = map.get(key);
-            dummy.val = value; 
+            dummy.val = value;
             updateCache(dummy);
             return;
         }
@@ -64,20 +55,15 @@ class LRUCache {
     }
 
     private void remove(LinkNode dummy) {
-        // [] <-> [dummy] <-> []
         dummy.prev.next = dummy.next;
         dummy.next.prev = dummy.prev;
     }
 
     private void insertMRU(LinkNode dummy) {
-        // <-> [real tail] <-> [tailMRU]
-        //            ^  >[dummy]< ^
-        tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
+        tailMRU.prev.next = dummy;
         dummy.next = tailMRU;
         tailMRU.prev = dummy;
-
-
 
     }
 
