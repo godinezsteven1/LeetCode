@@ -3,13 +3,12 @@ class Solution {
     private class Pair {
         int x;
         int y;
-        Pair(int x, int y) { 
+        Pair(int x, int y) {
             this.x = x;
             this.y = y;
         }
     }
 
-    // O(row x col)
     public int numIslands(char[][] grid) {
         int islandCounter = 0;
 
@@ -33,6 +32,7 @@ class Solution {
             Pair cell = q.poll();
             checkNeighbors(cell.x, cell.y, q, grid);
         }
+
     }
 
     private void checkNeighbors(int x, int y, Queue<Pair> q, char[][] grid) {
@@ -52,11 +52,6 @@ class Solution {
             grid[x][y + 1] = '0';
             q.add(new Pair(x, y + 1));
         }
+
     }
-
-
-
-
-
-
 }
