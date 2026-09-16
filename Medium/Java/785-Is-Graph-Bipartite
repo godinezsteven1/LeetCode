@@ -1,11 +1,12 @@
 class Solution {
+
     public boolean isBipartite(int[][] graph) {
         boolean[] visited = new boolean[100];
-        boolean[] color = new boolean[100]; 
+        boolean[] color = new boolean[100];
         Queue<Integer> q = new LinkedList<>();
 
-        for(int row = 0; row < graph.length; row++) {
-            if (visited[row] == true || graph[row].length == 0) {
+        for(int row = 0; row < graph.length - 1; row++) {
+            if (visited[row] || graph[row].length == 0) {
                 continue;
             }
             q.add(row);
@@ -15,7 +16,7 @@ class Solution {
             while (!q.isEmpty()) {
                 int node = q.poll();
                 for(int neighbor: graph[node]) {
-                    if(!visited[neighbor]) {
+                    if (!visited[neighbor]) {
                         q.add(neighbor);
                         visited[neighbor] = true;
                         color[neighbor] = !color[node];
@@ -27,6 +28,5 @@ class Solution {
             }
         }
         return true;
-        
     }
 }
