@@ -6,6 +6,7 @@ class Solution {
         int swapWithValue = -1;
 
         char[] digits = Integer.toString(num).toCharArray();
+
         for(int i = digits.length - 1; i >= 0; i--) {
             if (digits[i] > max) {
                 max = digits[i];
@@ -16,7 +17,6 @@ class Solution {
                 swapWithValue = max_i;
             }
         }
-        
         if (swapFrom != -1) {
             char temp = digits[swapFrom];
             digits[swapFrom] = digits[swapWithValue];
@@ -24,5 +24,6 @@ class Solution {
         }
 
         return Integer.parseInt(new String(digits));
+        
     }
 }
