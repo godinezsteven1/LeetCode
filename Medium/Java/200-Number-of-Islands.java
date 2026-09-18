@@ -12,8 +12,8 @@ class Solution {
     public int numIslands(char[][] grid) {
         int islandCounter = 0;
 
-        for(int row = 0; row <= grid.length - 1; row++) {
-            for(int col = 0; col <= grid[0].length - 1; col++) {
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[0].length; col++) {
                 if (grid[row][col] == '1') {
                     islandCounter++;
                     bfs(row, col, grid);
@@ -52,6 +52,5 @@ class Solution {
             grid[x][y + 1] = '0';
             q.add(new Pair(x, y + 1));
         }
-
     }
 }
