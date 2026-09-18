@@ -1,10 +1,10 @@
 class LRUCache {
 
-    int capacity;
     int key;
-    HashMap<Integer, LinkNode> map; 
+    int capacity;
     LinkNode headLRU;
     LinkNode tailMRU;
+    HashMap<Integer, LinkNode> map;
 
     private class LinkNode {
         int key;
@@ -14,18 +14,18 @@ class LRUCache {
         LinkNode(int key, int val) {
             this.key = key;
             this.val = val;
-
         }
     }
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.key = key;
         this.map = new HashMap<>(capacity);
+        this.key = key;
         this.headLRU = new LinkNode(0,0);
         this.tailMRU = new LinkNode(0,0);
         headLRU.next = tailMRU;
         tailMRU.prev = headLRU;
+
     }
     
     public int get(int key) {
@@ -46,11 +46,16 @@ class LRUCache {
         }
         if (map.size() == capacity) {
             LinkNode lru = headLRU.next;
-            remove(lru);
             map.remove(lru.key);
+            remove(lru);
         }
         LinkNode dummy = new LinkNode(key, value);
         map.put(key, dummy);
+        insertMRU(dummy);
+    }
+
+    private void updateCache(LinkNode dummy) {
+        remove(dummy);
         insertMRU(dummy);
     }
 
@@ -60,18 +65,14 @@ class LRUCache {
     }
 
     private void insertMRU(LinkNode dummy) {
-        dummy.prev = tailMRU.prev;
         tailMRU.prev.next = dummy;
+        dummy.prev = tailMRU.prev;
         dummy.next = tailMRU;
         tailMRU.prev = dummy;
-
-    }
-
-    private void updateCache(LinkNode dummy) {
-        remove(dummy);
-        insertMRU(dummy);
     }
 }
+
+
 
 /**
  * Your LRUCache object will be instantiated and called as such:
