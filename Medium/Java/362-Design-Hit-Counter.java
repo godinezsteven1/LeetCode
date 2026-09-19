@@ -1,12 +1,11 @@
 class HitCounter {
 
     Queue<Integer> q;
-    private int maxAge; 
+    int maxAge;
 
     public HitCounter() {
-        this.maxAge = 300; 
         this.q = new LinkedList<>();
-        
+        this.maxAge = 300;
     }
     
     public void hit(int timestamp) {
