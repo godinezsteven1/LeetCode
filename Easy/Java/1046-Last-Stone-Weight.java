@@ -9,11 +9,11 @@ class Solution {
         while (maxHeap.size() > 1) {
             int first = maxHeap.poll();
             int second = maxHeap.poll();
-            if (first <= second) {
-                maxHeap.add(second - first);
-            }
-            if (first > second) {
+
+            if (first >= second) {
                 maxHeap.add(first - second);
+            } else {
+                maxHeap.add(second - first);
             }
         }
 
