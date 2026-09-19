@@ -6,11 +6,11 @@ class Solution {
         int swapWithValue = -1;
         char[] digits = Integer.toString(num).toCharArray();
 
-        for (int i = digits.length - 1; i >= 0; i--) {
+        for(int i = digits.length - 1; i >= 0; i--) {
             if (digits[i] > max) {
                 max = digits[i];
                 max_i = i;
-            } 
+            }
             if (digits[i] < max) {
                 swapValue = i;
                 swapWithValue = max_i;
