@@ -1,5 +1,4 @@
 class HitCounter {
-
     Queue<Integer> q;
     int maxAge;
 
