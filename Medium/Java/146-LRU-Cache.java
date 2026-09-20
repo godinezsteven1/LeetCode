@@ -1,26 +1,48 @@
 class LRUCache {
+
+
+    HashMap<Integer, LinkNode> map;
     int capacity;
     int key;
-    HashMap<Integer, LinkNode> map;
     LinkNode headLRU;
     LinkNode tailMRU;
+
 
     private class LinkNode {
         int key;
         int val;
         LinkNode prev;
         LinkNode next;
-
         LinkNode(int key, int val) {
             this.key = key;
             this.val = val;
         }
     }
 
+    /**
+    hash map
+
+    naive: 
+    hash map 
+    <integer, Pair(rank, val)> 
+
+
+    need pointer lru <lru---mru>
+    DLL head tail
+    headLRU 
+    tailMRU
+
+    [headLRU]<->[real lru]<->[dummy]<->[real mru]<->[tailMRU]
+
+    ...<->[real mru]<->[tailMRU]
+                  [dummy]
+    
+     */
+
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.key = key;
         this.map = new HashMap<>(capacity);
+        this.key = key;
         this.headLRU = new LinkNode(0,0);
         this.tailMRU = new LinkNode(0,0);
         headLRU.next = tailMRU;
@@ -31,10 +53,10 @@ class LRUCache {
         if (!map.containsKey(key)) {
             return -1;
         }
+
         LinkNode dummy = map.get(key);
         updateCache(dummy);
         return dummy.val;
-        
     }
     
     public void put(int key, int value) {
@@ -46,20 +68,23 @@ class LRUCache {
         }
         if (map.size() == capacity) {
             LinkNode lru = headLRU.next;
-            remove(lru);
             map.remove(lru.key);
-        }
+            remove(lru);
+        } 
         LinkNode dummy = new LinkNode(key, value);
         map.put(key, dummy);
         insertMRU(dummy);
     }
 
     private void remove(LinkNode dummy) {
+        //[headLRU]<->[real lru]<->[dummy]<->[real mru]<->[tailMRU]
         dummy.prev.next = dummy.next;
         dummy.next.prev = dummy.prev;
     }
 
     private void insertMRU(LinkNode dummy) {
+        //    ...<->[real mru]<->[tailMRU]
+        //               ^ >[dummy]< ^
         tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
         tailMRU.prev = dummy;
