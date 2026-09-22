@@ -1,38 +1,46 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
         /**
+
         constraints: 
-            intervals[i].length == 2 
-            positive int 
-            out of order 
+            intervals[i].length = 2;
+            postive integers 
+            can be out of order 
+
         naive: 
-            Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
-            Output: [[1,6],[8,10],[15,18]]
-            brute force O(n^2) merge 
-            we are checking for (ith interval with ith + 1 ... interval.length )
+            brute force: O (n^2)
+                if curr range is within range of next? (do something) ok now try taht one next 
+                for i 
+                    for j
         optimal: 
+
             Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
-            Output:            [[1,6],[8,10],[15,18]]
+            Output: [[]]
 
-            Input: intervals = [1,4][4,7][5,8]
-            Output: [[1,7]]
-            curr = interval[0]
-            for i = 1
-            compare our current 
-            curr[1] vs next[0]
-                new interval curr[0] with max curr[1] with next[1] 
 
-            Arrays.sort(intervals(a,b) -> Integer.compare(a[0],b[0]));
-        
+            sort O(n log n) (sort by start time)
+            curr = intervals[0]
+            List<int[]> answer = new ArrayList<>();
+            for loop here starts i = 1;
+            next = intervals[i]
+            curr[1] >= next[1] conflict
+                curr[1] = Math.max(curr[1], next[1])
+            else {
+                answer.add(curr);
+                curr = next;
+            }
+            return answer.toArray(new int[answer.size()][]);
         */
-        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0])); //. O(n log n) 
-        int[] curr = intervals[0];
-        List<int[]> answer = new ArrayList<>(); // O(n) space 
-        for(int i = 1; i < intervals.length; i++) { // time O(n)
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0])); // O(n log n) running time 
+        int[] curr = intervals[0];// O(1)
+        List<int[]> answer = new ArrayList<>(); // O(n) space complexity 
+        for(int i = 1; i < intervals.length; i++) { // O(n)
             int[] next = intervals[i];
             if (curr[1] >= next[0]) {
+                // conflict 
                 curr[1] = Math.max(curr[1], next[1]);
             } else {
+                // no conflict , no merging 
                 answer.add(curr);
                 curr = next;
             }
