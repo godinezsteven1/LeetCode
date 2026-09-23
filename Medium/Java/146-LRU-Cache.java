@@ -19,26 +19,6 @@ class LRUCache {
         }
     }
 
-    /**
-    hash map
-
-    naive: 
-    hash map 
-    <integer, Pair(rank, val)> 
-
-
-    need pointer lru <lru---mru>
-    DLL head tail
-    headLRU 
-    tailMRU
-
-    [headLRU]<->[real lru]<->[dummy]<->[real mru]<->[tailMRU]
-
-    ...<->[real mru]<->[tailMRU]
-                  [dummy]
-    
-     */
-
     public LRUCache(int capacity) {
         this.capacity = capacity;
         this.map = new HashMap<>(capacity);
@@ -77,14 +57,11 @@ class LRUCache {
     }
 
     private void remove(LinkNode dummy) {
-        //[headLRU]<->[real lru]<->[dummy]<->[real mru]<->[tailMRU]
         dummy.prev.next = dummy.next;
         dummy.next.prev = dummy.prev;
     }
 
     private void insertMRU(LinkNode dummy) {
-        //    ...<->[real mru]<->[tailMRU]
-        //               ^ >[dummy]< ^
         tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
         tailMRU.prev = dummy;
