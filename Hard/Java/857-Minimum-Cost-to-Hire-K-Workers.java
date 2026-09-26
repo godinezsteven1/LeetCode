@@ -15,25 +15,25 @@ class Solution {
             double ratio = (double) wage[i] / quality[i];
             wageQualityRatio.add(new Pair(ratio, quality[i]));
         }
+
         wageQualityRatio.sort((a,b) -> Double.compare(a.ratio, b.ratio));
+
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
         int qualitySum = 0;
-        double minCost = Double.MAX_VALUE;
+        double min = Double.MAX_VALUE;
 
         for(Pair worker: wageQualityRatio) {
-            maxHeap.add(worker.quality);
             qualitySum += worker.quality;
+            maxHeap.add(worker.quality);
             if (maxHeap.size() > k) {
                 qualitySum -= maxHeap.poll();
             }
             if (maxHeap.size() == k) {
                 double cost = qualitySum * worker.ratio;
-                minCost = Math.min(cost, minCost);
+                min = Math.min(cost, min);
             }
         }
 
-        return minCost;
-
-
+        return min;
     }
 }
