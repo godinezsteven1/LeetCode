@@ -6,18 +6,17 @@ class Solution {
             maxHeap.add(stones[i]);
         }
 
-        while (maxHeap.size() > 1) {
+        while(maxHeap.size() > 1) {
             int first = maxHeap.poll();
             int second = maxHeap.poll();
-
             if (first >= second) {
                 maxHeap.add(first - second);
-            } else {
+            }
+            if (second > first) {
                 maxHeap.add(second - first);
             }
         }
 
         return maxHeap.poll();
-        
     }
 }
