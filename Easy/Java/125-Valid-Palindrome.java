@@ -1,27 +1,16 @@
 class Solution {
     public boolean isPalindrome(String s) {
         s = s.replaceAll("[^a-zA-Z0-9]", "");
-        s = s.toLowerCase(); 
-        int right = s.length() - 1;
-        int middle = right / 2; 
-        for(int left = 0; left < right; left++) {
+        s = s.toLowerCase();
+        int left = 0;
+        char[] word = s.toCharArray();
+        
+        for (int right = word.length - 1; right >= left; right--) {
             if (s.charAt(left) != s.charAt(right)) {
-                return false;
+            return false;
             }
-            right--;
+            left++;
         }
         return true;
-        /**
-        constraints: 
-            upper case; 
-            numbers 
-        naive: 
-            cumbersome approach to constraints 
-
-        optimal :
-
-        two pointers coming from left to right and just charAt their index; 
-        remove upper case and non alpanumeric characters 
-        */
     }
 }
