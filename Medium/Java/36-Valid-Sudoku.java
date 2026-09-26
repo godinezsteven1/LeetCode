@@ -1,31 +1,18 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-
-        /**
-        
-        can add --> true we have not seen before 
-
-        cant add --> false we seen before
-        
-        
-         */
-
-
-
         HashSet<String> seen = new HashSet<>();
-        for(int i = 0; i < 9; i++) {
-            for(int j = 0; j < 9; j++) {
-                char num = board[i][j];
-                if (num != '.') {
-                    if (!seen.add(num + "row" + i)
-                    || !seen.add(num + "col" + j)
-                    || !seen.add(num + "box" + i / 3 + '-' + j / 3)) {
+        for(int row = 0; row < 9; row++) {
+            for(int col = 0; col < 9; col++) {
+                char curr = board[row][col];
+                if (curr != '.') {
+                    if (!seen.add(curr + "row" + row)
+                    || !seen.add(curr + "col" + col)
+                    || !seen.add(curr + "box" + row / 3 + "-" + col / 3)) {
                         return false;
                     }
                 }
             }
         }
         return true;
-        
     }
 }
