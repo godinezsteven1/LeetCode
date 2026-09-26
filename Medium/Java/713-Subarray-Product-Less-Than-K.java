@@ -3,12 +3,12 @@ class Solution {
         if (k < 2) {
             return 0;
         }
-
-        int product = 1;
+        
         int left = 0;
+        int product = 1;
         int count = 0;
 
-        for(int right = 0; right <= nums.length - 1; right++) {
+        for(int right = 0; right < nums.length; right++) {
             product *= nums[right];
             while (product >= k) {
                 product /= nums[left];
