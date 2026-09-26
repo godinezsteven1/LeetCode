@@ -1,5 +1,4 @@
 class Solution {
-
     public boolean isBipartite(int[][] graph) {
         boolean[] visited = new boolean[100];
         boolean[] color = new boolean[100];
@@ -9,17 +8,18 @@ class Solution {
             if (visited[row] || graph[row].length == 0) {
                 continue;
             }
-            q.add(row);
+
             visited[row] = true;
             color[row] = true;
+            q.add(row);
 
             while (!q.isEmpty()) {
                 int node = q.poll();
                 for(int neighbor: graph[node]) {
                     if (!visited[neighbor]) {
-                        q.add(neighbor);
                         visited[neighbor] = true;
                         color[neighbor] = !color[node];
+                        q.add(neighbor);
                     }
                     if (visited[neighbor] && color[neighbor] == color[node]) {
                         return false;
@@ -28,5 +28,6 @@ class Solution {
             }
         }
         return true;
+        
     }
 }
