@@ -1,17 +1,15 @@
 class LRUCache {
 
-
     int capacity;
-    int key;
-    LinkNode headLRU;
+    HashMap<Integer, LinkNode> map;
     LinkNode tailMRU;
-    HashMap<Integer, LinkNode> map = new HashMap<>();
-
+    LinkNode headLRU;
+    
     private class LinkNode {
         int key;
         int val;
-        LinkNode prev;
         LinkNode next;
+        LinkNode prev;
         LinkNode(int key, int val) {
             this.key = key;
             this.val = val;
@@ -20,13 +18,11 @@ class LRUCache {
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.key = key;
+        this.map = new HashMap<>(capacity);
         this.headLRU = new LinkNode(0,0);
         this.tailMRU = new LinkNode(0,0);
         headLRU.next = tailMRU;
         tailMRU.prev = headLRU;
-        this.map = new HashMap<>(capacity);
-        
     }
     
     public int get(int key) {
@@ -61,8 +57,8 @@ class LRUCache {
     }
 
     private void insertMRU(LinkNode dummy) {
-        tailMRU.prev.next = dummy;
         dummy.prev = tailMRU.prev;
+        tailMRU.prev.next = dummy;
         dummy.next = tailMRU;
         tailMRU.prev = dummy;
     }
