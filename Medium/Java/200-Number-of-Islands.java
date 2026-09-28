@@ -1,21 +1,20 @@
 class Solution {
 
     private class Pair {
-        int x; 
+        int x;
         int y;
         Pair(int x, int y) {
             this.x = x;
             this.y = y;
         }
     }
-
     public int numIslands(char[][] grid) {
         int islandCounter = 0;
         for(int row = 0; row < grid.length; row++) {
             for(int col = 0; col < grid[0].length; col++) {
                 if (grid[row][col] == '1') {
                     islandCounter++;
-                    bfs(grid, row, col);
+                    bfs(row, col, grid);
                 }
             }
         }
@@ -23,7 +22,7 @@ class Solution {
         return islandCounter;
     }
 
-    private void bfs(char[][] grid, int row, int col) {
+    private void bfs(int row, int col, char[][] grid) {
         Queue<Pair> q = new LinkedList<>();
         grid[row][col] = '0';
         q.add(new Pair(row, col));
