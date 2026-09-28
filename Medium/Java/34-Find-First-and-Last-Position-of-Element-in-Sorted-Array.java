@@ -5,46 +5,50 @@ class Solution {
         return new int[] {left, right};
     }
 
-
     private int leftBinarySearch(int[] nums, int target) {
         int left = 0;
-        int right = nums.length - 1;
         int answer = -1;
+        int right = nums.length - 1;
 
         while (left <= right) {
-            int mid = (left + right) / 2;
-            if (nums[mid] == target) {
+            int mid = (right + left) / 2;
+            int curr = nums[mid];
+            if (curr == target) {
                 answer = mid;
                 right = mid - 1;
             }
-            if (nums[mid] > target) {
-                right = mid - 1;
-            }
-            if (nums[mid] < target) {
+            if (curr < target) {
                 left = mid + 1;
             }
+            if (curr > target) {
+                right = mid - 1;
+            }
         }
+
         return answer;
     }
 
+
     private int rightBinarySearch(int[] nums, int target) {
         int left = 0;
-        int right = nums.length - 1;
         int answer = -1;
+        int right = nums.length - 1;
 
         while (left <= right) {
-            int mid = (left + right) / 2;
-            if (nums[mid] == target) {
+            int mid = (right + left) / 2;
+            int curr = nums[mid];
+            if (curr == target) {
                 answer = mid;
                 left = mid + 1;
             }
-            if (nums[mid] > target) {
-                right = mid - 1;
-            }
-            if (nums[mid] < target) {
+            if (curr < target) {
                 left = mid + 1;
             }
+            if (curr > target) {
+                right = mid - 1;
+            }
         }
+
         return answer;
     }
 }
