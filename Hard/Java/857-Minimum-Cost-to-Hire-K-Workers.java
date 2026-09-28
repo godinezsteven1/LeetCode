@@ -11,14 +11,16 @@ class Solution {
 
     public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
         ArrayList<Pair> wageQualityRatio = new ArrayList<>();
-        for(int i = 0; i < quality.length; i++) {
+        for (int i = 0; i < quality.length; i++) {
             double ratio = (double) wage[i] / quality[i];
             wageQualityRatio.add(new Pair(ratio, quality[i]));
         }
+
         wageQualityRatio.sort((a,b) -> Double.compare(a.ratio, b.ratio));
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
         int qualitySum = 0;
         double min = Double.MAX_VALUE;
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
         for(Pair worker: wageQualityRatio) {
             qualitySum += worker.quality;
             maxHeap.add(worker.quality);
@@ -27,7 +29,7 @@ class Solution {
             }
             if (maxHeap.size() == k) {
                 double cost = qualitySum * worker.ratio;
-                min = Math.min(cost, min); 
+                min = Math.min(cost, min);
             }
         }
 
