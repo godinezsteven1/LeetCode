@@ -7,9 +7,8 @@ class Solution {
 
     private int leftBinarySearch(int[] nums, int target) {
         int left = 0;
-        int answer = -1;
         int right = nums.length - 1;
-
+        int answer = -1;
         while (left <= right) {
             int mid = (right + left) / 2;
             int curr = nums[mid];
@@ -24,16 +23,13 @@ class Solution {
                 right = mid - 1;
             }
         }
-
         return answer;
     }
 
-
     private int rightBinarySearch(int[] nums, int target) {
         int left = 0;
-        int answer = -1;
         int right = nums.length - 1;
-
+        int answer = -1;
         while (left <= right) {
             int mid = (right + left) / 2;
             int curr = nums[mid];
@@ -48,7 +44,6 @@ class Solution {
                 right = mid - 1;
             }
         }
-
         return answer;
     }
 }
