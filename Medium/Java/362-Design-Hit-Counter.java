@@ -6,6 +6,7 @@ class HitCounter {
     public HitCounter() {
         this.q = new LinkedList<>();
         this.maxAge = 300;
+        
     }
     
     public void hit(int timestamp) {
@@ -16,7 +17,7 @@ class HitCounter {
         while (!q.isEmpty() && timestamp - q.peek() >= maxAge) {
             q.poll();
         }
-
+        
         return q.size();
     }
 }
