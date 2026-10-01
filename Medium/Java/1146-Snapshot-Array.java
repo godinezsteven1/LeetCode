@@ -2,50 +2,56 @@ class SnapshotArray {
 
     private class Pair {
         int pastSnapID;
-        int val; 
+        int val;
+
         Pair(int pastSnapID, int val) {
             this.pastSnapID = pastSnapID;
             this.val = val;
         }
     }
 
-    ArrayList[] history;
+    int length;
     int snapID;
+    ArrayList[] history;
 
     public SnapshotArray(int length) {
+        this.length = length;
         this.history = new ArrayList[length];
         this.snapID = 0;
 
-        for(int i = 0; i < length; i++) {
-            history[i] = new ArrayList<Pair>();
+        for (int i = 0; i < length; i++) {
+            history[i] = new ArrayList<>();
         }
+
     }
-    
+
     public void set(int index, int val) {
-        history[index].add(new Pair(snapID, val)); 
+        history[index].add(new Pair(snapID, val));
     }
-    
+
     public int snap() {
         return snapID++;
     }
-    
+
     public int get(int index, int snap_id) {
+        // history[0] = [(0,5), (0,6)]
         ArrayList<Pair> list = history[index];
         int left = 0;
         int right = list.size() - 1;
         int answer = 0;
-
         while (left <= right) {
-            int middle = (left + right) / 2;
-            Pair curr = list.get(middle);
-            if (curr.pastSnapID <= snap_id) {
-                left = middle + 1;
-                answer = curr.val;
-            }
+            int mid = (right + left) / 2;
+            Pair curr = list.get(mid);
             if (curr.pastSnapID > snap_id) {
-                right = middle - 1;
+                right = mid - 1;
             }
+            if (curr.pastSnapID <= snap_id) {
+                answer = curr.val;
+                left = mid + 1;
+            }
+
         }
+
         return answer;
     }
 }
