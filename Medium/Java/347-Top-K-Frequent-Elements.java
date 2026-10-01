@@ -7,6 +7,7 @@ class Solution {
         }
 
         List<Integer>[] buckets = new List[nums.length + 1];
+
         for(int key: map.keySet()) {
             int freq = map.get(key);
 
@@ -22,6 +23,7 @@ class Solution {
                 answer.addAll(buckets[i]);
             }
         }
+
         return answer.stream().mapToInt(i -> i).toArray();
     }
 }
