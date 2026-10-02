@@ -8,6 +8,7 @@ class Solution {
             if (visited[row] || graph[row].length == 0) {
                 continue;
             }
+
             visited[row] = true;
             color[row] = true;
             q.add(row);
@@ -26,6 +27,7 @@ class Solution {
                 }
             }
         }
+        
         return true;
     }
 }
