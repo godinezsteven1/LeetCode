@@ -1,4 +1,5 @@
 class HitCounter {
+
     Queue<Integer> q;
     int maxAge;
 
@@ -12,9 +13,10 @@ class HitCounter {
     }
     
     public int getHits(int timestamp) {
-        while(!q.isEmpty() && timestamp - q.peek() >= maxAge) {
+        while (!q.isEmpty() && timestamp - q.peek() >= maxAge) {
             q.poll();
         }
+
         return q.size();
     }
 }
