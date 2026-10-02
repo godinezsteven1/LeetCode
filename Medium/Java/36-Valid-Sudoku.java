@@ -7,12 +7,13 @@ class Solution {
                 if (curr != '.') {
                     if (!seen.add(curr + "row" + row)
                     || !seen.add(curr + "col" + col)
-                    || !seen.add(curr + "box" + row / 3 + "-" + col / 3)) {
+                    || !seen.add(curr + "box" + row / 3 + '-' + col / 3)) {
                         return false;
                     }
                 }
             }
         }
+
         return true;
     }
 }
