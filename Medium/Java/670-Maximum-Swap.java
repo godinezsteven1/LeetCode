@@ -7,11 +7,11 @@ class Solution {
         char[] digits = Integer.toString(num).toCharArray();
 
         for(int i = digits.length - 1; i >= 0; i--) {
-            if (max < digits[i]) {
+            if (digits[i] > max) {
                 max = digits[i];
                 max_i = i;
             }
-            if (max > digits[i]) {
+            if (digits[i] < max) {
                 swapValue = i;
                 swapWithValue = max_i;
             }
@@ -24,5 +24,6 @@ class Solution {
         }
 
         return Integer.parseInt(new String(digits));
+        
     }
 }
