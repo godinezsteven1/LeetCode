@@ -3,43 +3,42 @@ class SnapshotArray {
     private class Pair {
         int pastSnapID;
         int val;
-
         Pair(int pastSnapID, int val) {
             this.pastSnapID = pastSnapID;
             this.val = val;
         }
     }
 
-    int length;
+    ArrayList<Pair>[] history;
     int snapID;
-    ArrayList[] history;
+    int length;
 
     public SnapshotArray(int length) {
         this.length = length;
-        this.history = new ArrayList[length];
         this.snapID = 0;
-
-        for (int i = 0; i < length; i++) {
+        this.history = new ArrayList[length];
+        
+        for(int i = 0; i < length; i++) {
             history[i] = new ArrayList<>();
         }
-
     }
-
+    
     public void set(int index, int val) {
         history[index].add(new Pair(snapID, val));
     }
-
+    
     public int snap() {
         return snapID++;
     }
-
+    
     public int get(int index, int snap_id) {
         ArrayList<Pair> list = history[index];
         int left = 0;
         int right = list.size() - 1;
         int answer = 0;
+
         while (left <= right) {
-            int mid = (right + left) / 2;
+            int mid = (left + right) / 2;
             Pair curr = list.get(mid);
             if (curr.pastSnapID <= snap_id) {
                 answer = curr.val;
@@ -48,7 +47,6 @@ class SnapshotArray {
             if (curr.pastSnapID > snap_id) {
                 right = mid - 1;
             }
-
         }
 
         return answer;
