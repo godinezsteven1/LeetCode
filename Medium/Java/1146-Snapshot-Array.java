@@ -34,7 +34,6 @@ class SnapshotArray {
     }
 
     public int get(int index, int snap_id) {
-        // history[0] = [(0,5), (0,6)]
         ArrayList<Pair> list = history[index];
         int left = 0;
         int right = list.size() - 1;
@@ -42,12 +41,12 @@ class SnapshotArray {
         while (left <= right) {
             int mid = (right + left) / 2;
             Pair curr = list.get(mid);
-            if (curr.pastSnapID > snap_id) {
-                right = mid - 1;
-            }
             if (curr.pastSnapID <= snap_id) {
                 answer = curr.val;
                 left = mid + 1;
+            }
+            if (curr.pastSnapID > snap_id) {
+                right = mid - 1;
             }
 
         }
