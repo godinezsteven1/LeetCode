@@ -21,6 +21,6 @@ class Solution {
             }
 
         }
-        return true;
+        return stack.isEmpty();
     }
 }
