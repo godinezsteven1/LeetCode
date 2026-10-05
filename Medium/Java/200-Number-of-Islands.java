@@ -8,21 +8,22 @@ class Solution {
             this.y = y;
         }
     }
+
     public int numIslands(char[][] grid) {
         int islandCounter = 0;
+
         for(int row = 0; row < grid.length; row++) {
             for(int col = 0; col < grid[0].length; col++) {
                 if (grid[row][col] == '1') {
                     islandCounter++;
-                    bfs(row, col, grid);
+                    dfs(row, col, grid);
                 }
             }
         }
-
         return islandCounter;
     }
 
-    private void bfs(int row, int col, char[][] grid) {
+    private void dfs(int row, int col, char[][] grid) {
         Queue<Pair> q = new LinkedList<>();
         grid[row][col] = '0';
         q.add(new Pair(row, col));
