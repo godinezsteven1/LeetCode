@@ -9,8 +9,6 @@ class Solution {
                 dp[i] = Math.max(dp[i], dp[i - stone] + stone);
             }
         }
-
         return sum - 2 * dp[target];
-        
     }
 }
