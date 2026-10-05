@@ -3,6 +3,7 @@ class Solution {
     private class Pair {
         double ratio;
         int quality;
+
         Pair(double ratio, int quality) {
             this.ratio = ratio;
             this.quality = quality;
@@ -22,16 +23,17 @@ class Solution {
         double min = Double.MAX_VALUE;
 
         for(Pair worker: wageQualityRatio) {
-            maxHeap.add(worker.quality);
             qualitySum += worker.quality;
+            maxHeap.add(worker.quality);
             if (maxHeap.size() > k) {
                 qualitySum -= maxHeap.poll();
             }
             if (maxHeap.size() == k) {
                 double cost = qualitySum * worker.ratio;
-                min = Math.min(min, cost);
+                min = Math.min(cost, min);
             }
         }
+
         return min;
     }
 }
