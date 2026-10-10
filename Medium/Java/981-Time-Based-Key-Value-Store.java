@@ -3,7 +3,7 @@ class TimeMap {
     HashMap<String, TreeMap<Integer, String>> treeMap;
 
     public TimeMap() {
-        treeMap = new HashMap<>();
+        this.treeMap = new HashMap<>();
     }
     
     public void set(String key, String value, int timestamp) {
@@ -15,6 +15,7 @@ class TimeMap {
         if (!treeMap.containsKey(key)) {
             return "";
         }
+
         Integer floorKey = treeMap.get(key).floorKey(timestamp);
         if (floorKey == null) {
             return "";
