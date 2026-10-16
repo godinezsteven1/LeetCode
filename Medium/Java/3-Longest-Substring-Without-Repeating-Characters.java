@@ -1,31 +1,30 @@
 class Solution {
-
     /**
     constraints: 
-        s will be non empty 
-        s will be english characters, digits symbol and spaces do i remove? 
-        how long will s b? 
-
+        english letter string 
+        longest string i can expect? 
+        shortest string i can expect? 
+        non empty string or do i check for that instance. 
+    
     naive: 
-        brute force that goes if i am at a does a come after, or after that and so on and have a running max like that. 
-
-    optimal: // "abcab"
-        sliding window approach 
+        brute force approach where at the current letter we are going to check forward and see if those violate our LSWRC rules. running max 
+    
+    optimal: 
+        sliding window 
+    
         int left = 0;
-        int max = 0; 
-
-        HashSet<Characters> seen = new HashSet<>();
-        for(int right = 0; right < s.length() - 1; right++) {
+        int max = 0;
+    
+    
+        HashSet<Character> seen = new HashSet<>();
+        for(int right = 0; right < s.length(); right++) {
             while (seen.contains(s.charAt(right))) {
                 seen.remove(s.charAt(left));
                 left++;
             }
-            seen.add(s.charAt(right)); // seen: ca
-            max = Math.max(max, right - left + 1);
+            seen.add(s.charAt(right));
+            max = Math.max(max, right - left + 1); // 3
         }
-
-        return max; 
-    
     
     
     
@@ -33,18 +32,17 @@ class Solution {
     */
     public int lengthOfLongestSubstring(String s) {
         int left = 0;
-        int max = 0; 
+        int max = 0;
 
         HashSet<Character> seen = new HashSet<>();
-        for(int right = 0; right < s.length(); right++) {
+        for (int right = 0; right < s.length(); right++) {
             while (seen.contains(s.charAt(right))) {
                 seen.remove(s.charAt(left));
                 left++;
             }
-            seen.add(s.charAt(right)); 
-            max = Math.max(max, right - left + 1);
+            seen.add(s.charAt(right));
+            max = Math.max(max, right - left + 1); 
         }
-
         return max; 
     }
 }
