@@ -1,72 +1,45 @@
 class Solution {
     /**
     constraints: 
-        only characters are [,{,(,),},]
-        max length? 
-        can solution have extra space? 
-    
+        only parenthesis (,{,[,],},)
+        can i expect any other symbols, letters, special character?
+        longest string i can expect? 
+        shortest? 
+
     naive: 
-        if _{_ is open then next one has to be _}_ closed 
-    
+        every time we see opening the first closing we see must be of that same type. 
+
     optimal: 
-        stacks 
-    
-        every time we see an open we add the closed version of it.
-        and every time we see a closed version... we pop it . 
-        having stack will let us maintain given order, and at the end all we have to do is 
-        check if everything has been popped or empty 
-    
-        Stack<Characters> stack = new Stack<>();
-        for(char p: s.toCharArray()) {
-            if (p == '{' || p == '(' || p == '[') {
-                if (p == '{') {
-                    stack.push('}');
-                }
-                if (p == '(') {
-                    stack.push(')');
-                }
-                if (p == '[') {
-                    stack.push(']');
-                }
-            } else {
-            // false if stack return empty too early or if the pop is not our curr
-                if (stack.isEmpty() || stack.pop() != p) {
-                    return false;
-                }
-            }
-        }
-    
-        return stack.isEmpty();
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        stack: if we see an opening parenthesis we push a close parenthesis to the stack 
+        ex if we see ( we push a ) 
+
+        if we see a close ) we know that the stack pop() has to also be a closed one otherwise we would be in violation  
+        
+        if (stack.isEmpty() || curr != stack.pop() {
+            return false;
+        }     
     */
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
-        for (char p : s.toCharArray()) {
-            if (p == '{' || p == '(' || p == '[') {
-                if (p == '{') {
-                    stack.push('}');
-                }
-                if (p == '(') {
-                    stack.push(')');
-                }
-                if (p == '[') {
+        Stack<Character> stack = new Stack<>(); 
+
+        for(char curr: s.toCharArray()) {
+            if (curr == '{' || curr == '(' || curr == '[') {
+                if (curr == '[') {
                     stack.push(']');
                 }
+                if (curr == '{') {
+                    stack.push('}');
+                }
+                if (curr == '(') {
+                    stack.push(')');
+                }
             } else {
-                if (stack.isEmpty() || stack.pop() != p) {
-                    return false;
+                if (stack.isEmpty() || curr != stack.pop()) {
+                    return false; 
                 }
             }
         }
 
-        return stack.isEmpty();
+        return stack.isEmpty(); 
     }
 }
