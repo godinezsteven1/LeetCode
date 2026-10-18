@@ -10,7 +10,8 @@ class Solution {
             int second = maxHeap.poll();
             if (first >= second) {
                 maxHeap.add(first - second);
-            } else {
+            }
+            if (first < second) {
                 maxHeap.add(second - first);
             }
         }
