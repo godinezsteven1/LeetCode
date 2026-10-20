@@ -1,6 +1,12 @@
 class LRUCache {
 
     /**
+
+
+    update cache O(1)
+    map look up, insert, removal is instant 
+
+    space O(n) n = capacity
     
     constraints:
         get and put must run in constant time O(1)
