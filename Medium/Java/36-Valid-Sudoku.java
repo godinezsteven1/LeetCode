@@ -54,12 +54,11 @@ class Solution {
         
          */
         
-        HashSet<String> seen = new HashSet<>();
-
+        HashSet<String> seen = new HashSet<>(); // space: O(E) = O(<181) 
         for(int row = 0; row < 9; row++) {
-            for(int col = 0; col < 9; col++) {
+            for(int col = 0; col < 9; col++) { // Run O(n^2) size O(9 x 9) O (181) = O(1) ... n x n = O(n)
                 char curr = board[row][col];
-                if (curr != '.') {
+                if (curr != '.') { // run same as map: O(1) 
                     if (!seen.add(curr + "row" + row)
                     || !seen.add(curr + "col" + col)
                     || !seen.add(curr + "box" + row / 3 + "-" + col / 3)) {
