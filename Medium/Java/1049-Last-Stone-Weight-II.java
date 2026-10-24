@@ -1,54 +1,75 @@
 class Solution {
-    public int lastStoneWeightII(int[] stones) {
+    /**
+    constraints
+        empty array? no 
+        smallest array we can expect? 
+        largest array we can expect?
+        smallest stone weight 
+        largest stone weight 
+        we wont encounter negative values 
+    naive: 
+        Input: stones = [2,7,4,1,8,1]
+        Output: 1
 
-        /**
-        constraints: 
-            int[] size?  1 to 30
-            stone weight 1 to 100 
-            int[] positive integer? 
-            choose at "random" two stones to smash? 
-            if x = y destroyed and if x != y we only track the biggest one w new weight of subtractingh them 
+        do until one stone left 
+        get rand [2,7,4,1,8,1] 
+        fromArray.remove(rand)
+        subtract it with anohter rand 
+            x === y both destroyed otherwise add back to array 
+
+        [2,7,4,1,8,1] 
+        [2,6,4,8,1]
+        [2,6,4,7]
+        [4,4,8,1]
+        [8,1]
+        [7]
+    optimal: 
+
+        Input: stones = [2,7,4,1,8,1]
+        Output: 1
+
+        sum = 23 
+            /.   \ 
+           12    11    if these two groups = 1
+         8 + 4.| 2 + 7 + 1 + 1     
+        creating groups of sum / 2 and hit those groups 
+
+        we only need to keep track of half 
+
+        only focus on one subgroup 12 
+
+        8 + 4 = 4 not optimal sol
+         
+        mult by 2 and then subtrack it from sum 
+        sum / 2 
+        dp[target]
 
 
-        naive: 
-            brute force; 
-                all possible combinatiosn of stone smashing and return optimal value. DP approach O(n^2)
-
-        optimal 
-            sum =  23 
-                  / \ 
-                 12 11 = 1 
-                 8,4   2,7,1,1
-
-                      3.  = 1
-            int target = sum / 2
-            int[] dp = new int[target  + 1]
-            dp[i] = Math.max(dp[i], dp[i - stone] + stone);
-
-            for(stone: stones) {
-                for(int i = target; i >= stone; i--) {
-                    dp[i] = Math.max(dp[i], dp[i - stone] + stone);
-                }
-            }
-            return sum - 2 * dp[target];
-            Input: stones = [2,7,4,1,8,1]
-            Output: 1
-            choose 7 4 
-            [2,3,1,8,1]
-            chose 2 3 
-            [1,1,8,1]
-            not optimal because 8 big 
-        */
-        int sum = Arrays.stream(stones).sum();
+        int sum = Arrays.stream(stones).sum(); 
         int target = sum / 2;
-        int[] dp = new int[target + 1]; // space O(n/2) = O(n)
-        for(int stone: stones) { // O(n) time 
-            for(int i = target; i >= stone; i--) { // O(n / 2 - 100^*) = O(n/2 - 1) = O(n)
+        int[] dp = new int[target + 1];
+
+        for(int stone: stones) {
+            for(int i = target; i >= stone; i--) {
                 dp[i] = Math.max(dp[i], dp[i - stone] + stone);
             }
         }
 
         return sum - 2 * dp[target];
 
+     */
+    
+    public int lastStoneWeightII(int[] stones) {
+        int sum = Arrays.stream(stones).sum();
+        int target = sum / 2;
+        int[] dp = new int[target + 1];
+
+        for(int stone: stones) {
+            for(int i = target; i >= stone; i--) {
+                dp[i] = Math.max(dp[i], dp[i - stone] + stone);
+            }
+        }
+
+        return sum - 2 * dp[target];
     }
 }
