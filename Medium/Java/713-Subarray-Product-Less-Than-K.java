@@ -5,9 +5,17 @@ class Solution {
             return 0;
         }
 
-        int left = 0;
+        /**
+        
+        constraints:
+            k biggest and smallest k to expect 
+            biggest and smallest nums.length to expect 
+            biggest and smalles nums[i] to expect 
+         */
+
         int product = 1;
-        int count = 0;
+        int count = 0; 
+        int left = 0;
 
         for(int right = 0; right < nums.length; right++) {
             product *= nums[right];
@@ -19,6 +27,5 @@ class Solution {
         }
 
         return count;
-        
     }
 }
